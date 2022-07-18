@@ -5,9 +5,29 @@
 		<meta name="description" content="April Tag generator for printing with family selection">
 		<meta name="keywords" content="AprilTag, OpenCV, marker, generate, print, computer vision, robotics">
 		<title>April Tag generator</title>
+		
+			<style>
+			table {
+			  font-family: arial, sans-serif;
+			  border-collapse: collapse;
+			  width: 100%;
+			}
+			
+			td, th {
+			  border: 1px solid #dddddd;
+			  text-align: left;
+			  padding: 8px;
+			}
+			
+			tr:nth-child(even) {
+			  background-color: #dddddd;
+			}
+			</style>
+		
 	</head>
 	<body>
 		<h1>April Tags generator</h1>
+		<b>Here you can generate AprilTag 2 and AprilTag 3 family ID's based on desired dimensions and print it. </b>
 		<form class="setup">
 			<div class="field">
 				<label for="frm-dict">Tag Family:</label>
@@ -32,6 +52,7 @@
 				<label for="frm-size">Size, mm:</label>
 				<input id="frm-size" name="size" type="number" min="10" max="5000" value="100">
 			</div>
+			
 		</form>
 
 		<div class="marker-id"></div>
@@ -44,5 +65,54 @@
 		<footer>
 		</footer>
 		<script type="text/javascript" src="main.js"></script>
+
+<table>
+	<tr>
+	  <th>Tag_Family</th>
+	  <th>No. of ID's</th>
+	  
+	</tr>
+	<tr>
+	  <td>16h5</td>
+	  <td>30</td>
+	  
+	</tr>
+	<tr>
+	  <td>25h9</td>
+	  <td>35</td>
+	  
+	</tr>
+	<tr>
+	  <td>36h11</td>
+	  <td>587</td>
+	  
+	</tr>
+	<tr>
+	  <td>Circle21h7</td>
+	  <td>38</td>
+	  
+	</tr>
+	<tr>
+	  <td>Circle49h12</td>
+	  <td>65,698</td>
+	  
+	</tr>
+	<tr>
+	  <td>Custom48h12</td>
+	  <td>42,211</td>
+	  
+	</tr>
+	<tr>
+		<td>tagStandard41h12</td>
+		<td>2,115</td>
+		
+	  </tr>
+	  <tr>
+		<td>tagStandard52h13</td>
+		<td>48,714</td>
+		
+	  </tr>
+
+  </table>
 	</body>
 </html>
