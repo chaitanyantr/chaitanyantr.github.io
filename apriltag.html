@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="main.css"/>
+		<meta name="description" content="April Tag generator for printing with family selection">
+		<meta name="keywords" content="AprilTag, OpenCV, marker, generate, print, computer vision, robotics">
+		<title>April Tag generator</title>
+	</head>
+	<body>
+		<h1>April Tags generator</h1>
+		<form class="setup">
+			<div class="field">
+				<label for="frm-dict">Tag Family:</label>
+				<select name="dict" id="frm-dict">
+					<optgroup label="Standard Families">
+						<option value="tag16h5" data-width="5" data-height="5">tag16h5</option>
+						<option selected value="tag25h9" data-width="4" data-height="4">tag25h9</option>
+						<option value="tag36h11" data-width="5" data-height="5">tag36h11</option>
+						<option value="tagCircle21h7" data-width="6" data-height="6">tagCircle21h7</option>
+						<option value="tagCircle49h12" data-width="7" data-height="7">tagCircle49h12</option>
+						<option value="tagCustom48h12" data-width="7" data-height="7">tagCustom48h12</option>
+						<option value="tagStandard41h12" data-width="7" data-height="7">tagStandard41h12</option>
+						<option value="tagStandard52h13" data-width="7" data-height="7">tagStandard52h13</option>
+					</optgroup>
+				</select>
+			</div>
+			<div class="field">
+				<label for="frm-id">Tag ID:</label>
+				<input id="frm-id" name="id" type="number" min="0" value="0">
+			</div>
+			<div class="field">
+				<label for="frm-size">Size, mm:</label>
+				<input id="frm-size" name="size" type="number" min="10" max="5000" value="100">
+			</div>
+		</form>
+
+		<div class="marker-id"></div>
+		<div class="marker"></div>
+
+		<div class="tools">
+			<a href="" class="save-button">Save</a> this marker as SVG, or
+			<a href="javascript:window.print()">open</a> standard browser's print dialog to print or get the PDF.
+		</div>
+		<footer>
+		</footer>
+		<script type="text/javascript" src="main.js"></script>
+	</body>
+</html>
