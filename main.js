@@ -95,6 +95,7 @@ function init() {
 	familySelect.addEventListener('input', updateTag);
 	markerIdInput.addEventListener('input', updateTag);
 	sizeInput.addEventListener('input', updateSize);
+	sizeInput.addEventListener('input', updateTag);
 }
 
 init();
