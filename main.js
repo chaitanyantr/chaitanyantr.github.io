@@ -75,6 +75,7 @@ function init() {
 	}
 
 	var updateTag = debounce(function() {
+		var sizeid = Number(sizeInput.value);
 		var markerId = Number(markerIdInput.value);
 		var familyName = familySelect.options[familySelect.selectedIndex].value;
 		getAprilTagSVGContent(familyName, markerId).then(function(content){
@@ -84,7 +85,7 @@ function init() {
 			updateSize()
 			saveButton.setAttribute('href', 'data:image/svg;base64,' + btoa(svgElm.outerHTML.replace('viewbox', 'viewBox')));
 			saveButton.setAttribute('download', familyName + '-' + markerId + '.svg');
-			document.querySelector('.marker-id').innerHTML = familyName + ', ID : ' +  + markerId + + size +'mm' ;
+			document.querySelector('.marker-id').innerHTML = familyName + ', ID : ' +  + markerId + + sizeid +'mm' ;
 		})
 	}, 200)
 
