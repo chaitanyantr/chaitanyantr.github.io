@@ -85,7 +85,7 @@ function init() {
 			updateSize()
 			saveButton.setAttribute('href', 'data:image/svg;base64,' + btoa(svgElm.outerHTML.replace('viewbox', 'viewBox')));
 			saveButton.setAttribute('download', familyName + '-' + markerId + '.svg');
-			document.querySelector('.marker-id').innerHTML = familyName + ', ID : ' +  + markerId + + sizeid +'mm' ;
+			document.querySelector('.marker-id').innerHTML = familyName + ', ID : ' +  + markerId + 'Size:' + sizeid + ' mm' ;
 		})
 	}, 200)
 
