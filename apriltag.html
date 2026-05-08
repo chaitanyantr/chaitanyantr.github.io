@@ -1,125 +1,121 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<link rel="stylesheet" href="main.css"/>
-		<meta name="description" content="April Tag generator for printing with family selection">
-		<meta name="keywords" content="AprilTag, OpenCV, marker, generate, print, computer vision, robotics">
-		<title>April Tag generator</title>
-		
-			<style>
-			table {
-			  font-family: arial, sans-serif;
-			  border-collapse: collapse;
-			  width: 100%;
-			}
-			
-			td, th {
-			  border: 1px solid #dddddd;
-			  text-align: left;
-			  padding: 8px;
-			}
-			
-			tr:nth-child(even) {
-			  background-color: #dddddd;
-			}
-			</style>
-		
-	</head>
-	<body>
-		<h1>April Tags generator</h1>
-		<b>Here you can generate AprilTag 2 and AprilTag 3 family ID's based on desired dimensions and print it. </b>
-		<form class="setup">
-			<div class="field">
-				<label for="frm-dict">Tag Family:</label>
-				<select name="dict" id="frm-dict">
-					<optgroup label="Standard Families">
-						<option value="tag16h5" data-width="5" data-height="5">tag16h5</option>
-						<option selected value="tag25h9" data-width="4" data-height="4">tag25h9</option>
-						<option value="tag36h11" data-width="5" data-height="5">tag36h11</option>
-						<!-- <option value="tagCircle21h7" data-width="6" data-height="6">tagCircle21h7</option> -->
-						<!-- <option value="tagCircle49h12" data-width="7" data-height="7">tagCircle49h12</option> -->
-						<option value="tagCustom48h12" data-width="7" data-height="7">tagCustom48h12</option>
-						<option value="tagStandard41h12" data-width="7" data-height="7">tagStandard41h12</option>
-						<option value="tagStandard52h13" data-width="7" data-height="7">tagStandard52h13</option>
-					</optgroup>
-				</select>
-			</div>
-			<div class="field">
-				<label for="frm-id">Tag ID:</label>
-				<input id="frm-id" name="id" type="number" min="0" value="0">
-			</div>
-			<div class="field">
-				<label for="frm-size">Total Size, mm:</label>
-				<input id="frm-size" name="size" type="number" min="10" max="5000" value="100">
-			</div>
-			<div class="field">
-				<label for="frm-tag-size">
-					<span title="AprilTag defines the tag size as the distance between detection corners, not between the outside edges (which includes padding)">&#9432;</span>
-					Tag Size, mm:
-				</label>
-				<input id="frm-tag-size" name="tag-size" type="number" min="10" max="5000" value="100">
-			</div>
-			
-			
-		</form>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>AprilTag Generator &mdash; Chaithanya Krishna</title>
+    <meta name="description" content="Generate AprilTag 2 and AprilTag 3 markers in your browser. Pick a tag family, ID, and physical size, then save as SVG or print.">
+    <meta name="keywords" content="AprilTag, OpenCV, marker, generate, print, computer vision, robotics">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="img/chaitanya_logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="apriltag.css">
+</head>
+<body>
 
-		<div class="marker-id"></div>
-		<div class="marker"></div>
-		<div class="tools">
-			<a href="" class="save-button">Save</a> this marker as SVG, or
-			<a href="javascript:window.print()">open</a> standard browser's print dialog to print or get the PDF.
-		</div>
-		<footer>
-		</footer>
-		<script type="text/javascript" src="main.js"></script>
+<nav class="topnav">
+    <div class="topnav-inner">
+        <a href="index.html" class="brand">Chaithanya&nbsp;Krishna</a>
+        <div class="topnav-links">
+            <a href="index.html">Home</a>
+            <a href="apriltag.html" class="active">AprilTag&nbsp;Generator</a>
+            <a href="https://scholar.google.com/citations?user=0tXwJl8AAAAJ">Scholar</a>
+            <a href="https://github.com/chaitanyantr">GitHub</a>
+        </div>
+    </div>
+</nav>
 
-<table>
-	<tr>
-	  <th>Tag_Family</th>
-	  <th>No. of ID's</th>
-	  
-	</tr>
-	<tr>
-	  <td>16h5</td>
-	  <td>30</td>
-	  
-	</tr>
-	<tr>
-	  <td>25h9</td>
-	  <td>35</td>
-	  
-	</tr>
-	<tr>
-	  <td>36h11</td>
-	  <td>587</td>
-	  
-	</tr>
-	<tr>
-	  <td>Circle21h7</td>
-	  <td>38</td>
-	  
-	</tr>
-	<tr>
-	  <td>Circle49h12</td>
-	  <td>65,698</td>
-	  
-	</tr>
-	<tr>
-	  <td>Custom48h12</td>
-	  <td>42,211</td>
-	  
-	</tr>
-	<tr>
-		<td>tagStandard41h12</td>
-		<td>2,115</td>
-		
-	  </tr>
-	  <tr>
-		<td>tagStandard52h13</td>
-		<td>48,714</td>
-		
-	  </tr>
+<div class="page apriltag-page">
 
-  </table>
-	</body>
+    <header class="apriltag-header">
+        <div class="apriltag-badge">
+            <div class="tag-preview-mini"></div>
+        </div>
+        <div>
+            <h1>AprilTag Generator</h1>
+            <p>
+                Generate AprilTag&nbsp;2 and AprilTag&nbsp;3 fiducial markers right in your
+                browser. Pick a family, an ID, and the physical size &mdash; then save as
+                SVG or print directly. Handy when you need fiducials in a hurry for a
+                robotics demo.
+            </p>
+        </div>
+    </header>
+
+    <!-- Two-column layout: form on left, marker preview on right -->
+    <section class="apriltag-tool">
+        <div class="apriltag-grid">
+            <form class="setup">
+                <div class="field">
+                    <label for="frm-dict">Tag family</label>
+                    <select name="dict" id="frm-dict">
+                        <optgroup label="Standard families">
+                            <option value="tag16h5" data-width="5" data-height="5">tag16h5</option>
+                            <option selected value="tag25h9" data-width="4" data-height="4">tag25h9</option>
+                            <option value="tag36h11" data-width="5" data-height="5">tag36h11</option>
+                            <option value="tagCustom48h12" data-width="7" data-height="7">tagCustom48h12</option>
+                            <option value="tagStandard41h12" data-width="7" data-height="7">tagStandard41h12</option>
+                            <option value="tagStandard52h13" data-width="7" data-height="7">tagStandard52h13</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="frm-id">Tag ID</label>
+                    <input id="frm-id" name="id" type="number" min="0" value="0">
+                </div>
+
+                <div class="field">
+                    <label for="frm-size">Total size (mm)</label>
+                    <input id="frm-size" name="size" type="number" min="10" max="5000" value="100">
+                </div>
+
+                <div class="field">
+                    <label for="frm-tag-size" title="AprilTag defines the tag size as the distance between detection corners, not the outside edges (which include padding).">
+                        Tag size (mm) <span class="info">&#9432;</span>
+                    </label>
+                    <input id="frm-tag-size" name="tag-size" type="number" min="10" max="5000" value="100">
+                </div>
+
+                <div class="tools">
+                    <a href="" class="save-button">⬇ Save SVG</a>
+                    <a href="javascript:window.print()">🖨 Print / PDF</a>
+                </div>
+            </form>
+
+            <div class="preview-pane">
+                <div class="marker-id"></div>
+                <div class="marker"></div>
+                <p class="preview-caption">Live preview</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="apriltag-table">
+        <h2>Available IDs per family</h2>
+        <table>
+            <thead>
+                <tr><th>Tag family</th><th>Number of IDs</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>tag16h5</td><td>30</td></tr>
+                <tr><td>tag25h9</td><td>35</td></tr>
+                <tr><td>tag36h11</td><td>587</td></tr>
+                <tr><td>tagCircle21h7</td><td>38</td></tr>
+                <tr><td>tagCircle49h12</td><td>65,698</td></tr>
+                <tr><td>tagCustom48h12</td><td>42,211</td></tr>
+                <tr><td>tagStandard41h12</td><td>2,115</td></tr>
+                <tr><td>tagStandard52h13</td><td>48,714</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; Chaithanya Krishna Bodduluri &middot;
+           <a href="index.html">Home</a></p>
+    </footer>
+
+</div>
+
+<script type="text/javascript" src="main.js"></script>
+</body>
 </html>

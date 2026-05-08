@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+__MACOSX/
+._*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS / build
+node_modules/
+.cache/

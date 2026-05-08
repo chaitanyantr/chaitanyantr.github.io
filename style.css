@@ -1,0 +1,327 @@
+/* ==========================================================
+   Portfolio – clean, single-column layout
+   Inspired by jonbarron.info
+   ========================================================== */
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #222;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Top nav (sticky) ---------- */
+.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid #eee;
+}
+
+.topnav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.topnav .brand {
+    font-weight: 600;
+    color: #222;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+}
+.topnav .brand:hover { text-decoration: none; color: #1772d0; }
+
+.topnav-links {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.topnav-links a {
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #555;
+    border-radius: 6px;
+    font-weight: 500;
+}
+.topnav-links a:hover {
+    background: #f3f3f3;
+    color: #111;
+    text-decoration: none;
+}
+.topnav-links a.active {
+    background: #1772d0;
+    color: #fff;
+}
+.topnav-links a.active:hover { background: #135ea8; color: #fff; }
+
+a {
+    color: #1772d0;
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+em { font-style: italic; }
+
+.page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+
+/* ---------- Intro / header ---------- */
+.intro {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 48px;
+}
+
+.intro .profile {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background: #f3f3f3;
+    padding: 12px;
+    border: 1px solid #eee;
+}
+
+.intro .bio { flex: 1; min-width: 0; }
+
+.intro h1 {
+    font-size: 26px;
+    margin: 0 0 12px 0;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.intro p {
+    margin: 0 0 14px 0;
+}
+
+.intro .links {
+    margin-top: 18px;
+    font-size: 15px;
+    color: #555;
+}
+.intro .links a { font-weight: 500; }
+
+/* ---------- Sections ---------- */
+section {
+    margin-top: 40px;
+    border-top: 1px solid #eee;
+    padding-top: 24px;
+}
+
+section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 18px 0;
+    letter-spacing: -0.01em;
+}
+
+/* ---------- News ---------- */
+ul.news {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 220px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding: 10px 14px;
+    background: #fafafa;
+}
+
+ul.news li {
+    padding: 6px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 15px;
+}
+ul.news li:last-child { border-bottom: none; }
+
+ul.news .date {
+    display: inline-block;
+    width: 60px;
+    color: #888;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+
+/* ---------- Projects ---------- */
+.project {
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+.project-img {
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.project-img img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    background: #f6f6f6;
+}
+
+.project-text { flex: 1; min-width: 0; }
+
+.project-text h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+}
+
+.project-text p {
+    margin: 0;
+    color: #444;
+    font-size: 15px;
+}
+
+/* AprilTag thumbnail – simple svg-like marker */
+.apriltag-thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f6f6f6;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    height: 130px;
+}
+.tag-preview {
+    width: 96px;
+    height: 96px;
+    background:
+        linear-gradient(#000 0 0) 0   0   / 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 16px 0  / 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 64px 0  / 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 80px 0  / 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 0   16px/ 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 80px 16px/ 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 32px 32px/ 32px 16px no-repeat,
+        linear-gradient(#000 0 0) 32px 48px/ 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 0   80px/ 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 16px 80px/ 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 64px 80px/ 16px 16px no-repeat,
+        linear-gradient(#000 0 0) 80px 80px/ 16px 16px no-repeat,
+        #fff;
+    border: 8px solid #000;
+}
+
+/* ---------- Publications ---------- */
+.pub-meta {
+    font-size: 14px;
+    color: #777;
+    margin: -8px 0 16px 0;
+}
+
+.pub {
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed #eee;
+}
+.pub:last-child { border-bottom: none; }
+
+.pub-title {
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: #111;
+    font-size: 15px;
+}
+.pub-authors {
+    margin: 0 0 2px 0;
+    font-size: 14px;
+    color: #444;
+}
+.pub-venue {
+    margin: 0;
+    font-size: 14px;
+    color: #777;
+    font-style: italic;
+}
+
+/* ---------- Experience timeline ---------- */
+ul.timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+ul.timeline li {
+    display: flex;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 15px;
+}
+ul.timeline li:last-child { border-bottom: none; }
+ul.timeline .when {
+    width: 130px;
+    flex-shrink: 0;
+    color: #888;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+ul.timeline .what { flex: 1; color: #333; }
+
+/* ---------- Footer ---------- */
+footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+    .topnav-inner {
+        padding: 10px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .topnav-links { width: 100%; gap: 2px; }
+    .topnav-links a { padding: 5px 9px; font-size: 13px; }
+
+    .intro {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+    }
+    .intro .profile { width: 140px; height: 140px; }
+    .intro .links { text-align: center; }
+
+    .project { flex-direction: column; }
+    .project-img { width: 100%; }
+    .project-img img { height: 180px; }
+    .apriltag-thumb { height: 180px; }
+
+    ul.timeline li { flex-direction: column; gap: 2px; }
+    ul.timeline .when { width: auto; }
+    ul.news .date { width: 56px; }
+}
