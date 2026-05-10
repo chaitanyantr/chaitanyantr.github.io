@@ -2,13 +2,130 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>AprilTag Generator &mdash; Chaithanya Krishna</title>
-    <meta name="description" content="Generate AprilTag 2 and AprilTag 3 markers in your browser. Pick a tag family, ID, and physical size, then save as SVG or print.">
-    <meta name="keywords" content="AprilTag, OpenCV, marker, generate, print, computer vision, robotics">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="img/chaitanya_logo.png">
+
+    <!-- ===== SEO ===== -->
+    <title>AprilTag Generator &mdash; Free Online Tool to Print AprilTag Markers (SVG &amp; PDF)</title>
+    <meta name="description" content="Free online AprilTag generator. Create, preview, and print AprilTag fiducial markers (tag36h11, tag25h9, tag16h5, tagStandard41h12, tagCustom48h12, tagStandard52h13) at any size. Download as SVG or print to PDF on A4 — multi-tag layouts with dashed cut lines included. Works in your browser, no install.">
+    <meta name="keywords" content="AprilTag generator, AprilTag printable, AprilTag PDF, AprilTag SVG, fiducial marker generator, tag36h11 generator, tag25h9 generator, tag16h5 generator, tagStandard41h12, tagStandard52h13, tagCustom48h12, AprilTag 3 generator, AprilTag online, robotics fiducial markers, ROS AprilTag, OpenCV AprilTag, AprilTag print, AprilTag for camera calibration, AprilTag size">
+    <meta name="author" content="Chaithanya Krishna Bodduluri">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://chaitanyantr.github.io/apriltag.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AprilTag Generator — Free Online Printable AprilTag Markers (SVG / PDF)">
+    <meta property="og:description" content="Generate and print AprilTag fiducial markers (tag36h11, tag25h9, tag16h5, tagStandard, tagCustom) at any size. SVG / PDF / multi-tag A4 layout with cut lines.">
+    <meta property="og:url" content="https://chaitanyantr.github.io/apriltag.html">
+    <meta property="og:image" content="https://chaitanyantr.github.io/img/og-apriltag.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Chaithanya Krishna Bodduluri">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AprilTag Generator — Free Online Printable AprilTag Markers">
+    <meta name="twitter:description" content="Generate and print AprilTag fiducial markers in any size. SVG / PDF / multi-tag A4 layout.">
+    <meta name="twitter:image" content="https://chaitanyantr.github.io/img/og-apriltag.png">
+
+    <link rel="icon" type="image/svg+xml" href="img/tag16h5-11.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#1772d0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="apriltag.css">
+
+    <!-- Structured data: WebApplication + FAQPage so Google can render rich snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "AprilTag Generator",
+          "url": "https://chaitanyantr.github.io/apriltag.html",
+          "applicationCategory": "UtilityApplication",
+          "operatingSystem": "Any (browser-based)",
+          "description": "Free online tool to generate and print AprilTag fiducial markers (tag36h11, tag25h9, tag16h5, tagStandard41h12, tagCustom48h12, tagStandard52h13). Save as SVG or print to PDF with multi-tag A4 layouts and dashed cut lines.",
+          "browserRequirements": "Requires JavaScript. Works in Chrome, Firefox, Safari, Edge.",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "author": {
+            "@type": "Person",
+            "name": "Chaithanya Krishna Bodduluri",
+            "url": "https://chaitanyantr.github.io/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home",  "item": "https://chaitanyantr.github.io/" },
+            { "@type": "ListItem", "position": 2, "name": "AprilTag Generator", "item": "https://chaitanyantr.github.io/apriltag.html" }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "name": "How to generate and print an AprilTag",
+          "description": "Pick an AprilTag family, set the physical size, preview the marker, and either save as SVG or print one or many tags onto an A4 sheet with cut lines.",
+          "totalTime": "PT2M",
+          "tool": [{ "@type": "HowToTool", "name": "AprilTag Generator (chaitanyantr.github.io/apriltag.html)" }],
+          "step": [
+            { "@type": "HowToStep", "position": 1, "name": "Pick a tag family",   "text": "Choose tag36h11 for general use, or tagStandard52h13 / tagCustom48h12 if you need many unique IDs." },
+            { "@type": "HowToStep", "position": 2, "name": "Choose a tag ID",     "text": "Enter any integer from 0 to the maximum ID supported by the family." },
+            { "@type": "HowToStep", "position": 3, "name": "Enter the tag size",  "text": "Type either the total printed size or the detector tag size in millimeters. The two fields are linked." },
+            { "@type": "HowToStep", "position": 4, "name": "Save or queue",       "text": "Click Save SVG to download a single marker, or Add to sheet to queue it for a multi-tag print sheet." },
+            { "@type": "HowToStep", "position": 5, "name": "Print to PDF",        "text": "Click Print / PDF. Tags are auto-packed onto A4 pages with dashed cut lines." }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is an AprilTag?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "AprilTag is a visual fiducial marker system widely used in robotics and computer vision for camera calibration, robot localization, augmented reality, and pose estimation. Each tag encodes a unique ID and can be detected very reliably even at long range or under poor lighting."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What size should I print my AprilTag?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The detector needs the tag size — the side length of the inner solid black detection square (the boundary between black border and white quiet zone), not the outer paper edge. This generator shows both the total printed size and the detector tag size, and converts between them automatically."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which AprilTag family should I use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "tag36h11 is the most common general-purpose family with 587 unique IDs and excellent detection performance. tag25h9 is faster but offers fewer IDs (35). tag16h5 is the smallest. The tagStandard and tagCustom families from AprilTag 3 (2019) offer even better detection rates and many more IDs."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I print multiple AprilTags on one sheet?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Configure each tag, click Add to sheet, and the generator packs them onto A4 pages with dashed cut lines, automatically paginating when a page is full. Then use Print / PDF to save the multi-page document."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is this AprilTag generator free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes — it is completely free, runs entirely in your browser (no server, no signup, no tracking), and supports save-as-SVG and print-to-PDF."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
 
@@ -28,15 +145,17 @@
 
     <header class="apriltag-header">
         <div class="apriltag-badge">
-            <div class="tag-preview-mini"></div>
+            <img src="img/tag16h5-11.svg" alt="AprilTag tag16h5 ID 11">
         </div>
         <div>
-            <h1>AprilTag Generator</h1>
+            <h1>AprilTag Generator &mdash; Print AprilTag Markers Online (SVG &amp; PDF)</h1>
             <p>
-                Generate AprilTag&nbsp;2 and AprilTag&nbsp;3 fiducial markers right in your
-                browser. Pick a family, an ID, and the physical size &mdash; then save as
-                SVG or print directly. Handy when you need fiducials in a hurry for a
-                robotics demo.
+                Free, open, browser-based <strong>AprilTag generator</strong> for robotics and
+                computer vision. Generate <em>tag36h11</em>, <em>tag25h9</em>, <em>tag16h5</em>,
+                <em>tagStandard41h12</em>, <em>tagStandard52h13</em>, and <em>tagCustom48h12</em>
+                fiducial markers in any physical size. Preview live, save as
+                <strong>SVG</strong>, or build a <strong>multi-tag A4 print sheet</strong> with
+                dashed cut lines and export to <strong>PDF</strong>.
             </p>
         </div>
     </header>
@@ -78,7 +197,8 @@
 
                 <div class="tools">
                     <a href="" class="save-button">⬇ Save SVG</a>
-                    <a href="javascript:window.print()">🖨 Print / PDF</a>
+                    <button type="button" class="add-button">+ Add to sheet</button>
+                    <a href="javascript:window.print()" class="print-button">🖨 Print / PDF</a>
                 </div>
             </form>
 
@@ -90,8 +210,29 @@
         </div>
     </section>
 
+    <!-- Print sheet: queue + paginated A4 preview -->
+    <section class="sheet-section" hidden>
+        <div class="sheet-header">
+            <h2>Print sheet <span class="sheet-count">0</span></h2>
+            <div class="sheet-actions">
+                <span class="page-info"></span>
+                <button type="button" class="clear-sheet">Clear all</button>
+            </div>
+        </div>
+        <p class="sheet-help">
+            Tags are packed onto A4 pages (210&nbsp;&times;&nbsp;297&nbsp;mm, 10&nbsp;mm margin).
+            Dashed lines show where to cut. Hit <em>Print&nbsp;/&nbsp;PDF</em> to print all pages.
+        </p>
+        <div class="print-pages"></div>
+    </section>
+
     <section class="apriltag-table">
-        <h2>Available IDs per family</h2>
+        <h2>Available IDs per AprilTag family</h2>
+        <p class="table-intro">
+            AprilTag offers several families with different trade-offs between marker
+            size, robustness, and the number of unique IDs available. Pick the one that
+            matches your application:
+        </p>
         <table>
             <thead>
                 <tr><th>Tag family</th><th>Number of IDs</th></tr>
@@ -109,13 +250,148 @@
         </table>
     </section>
 
+    <!-- ===== Long-form content for SEO + actual user value ===== -->
+
+    <section class="article">
+        <h2>What is an AprilTag?</h2>
+        <p>
+            <strong>AprilTags</strong> are a popular family of <em>visual fiducial markers</em>
+            developed by the <a href="https://april.eecs.umich.edu/">APRIL Robotics Lab</a> at
+            the University of Michigan. They look like small QR-code-style black-and-white
+            squares and are widely used in robotics and computer vision for:
+        </p>
+        <ul>
+            <li><strong>Camera calibration</strong> &mdash; computing intrinsic / extrinsic parameters.</li>
+            <li><strong>Robot localization &amp; mapping</strong> &mdash; tagging the environment with known landmarks.</li>
+            <li><strong>6-DoF pose estimation</strong> &mdash; recovering the position and orientation of an object.</li>
+            <li><strong>Augmented reality</strong> &mdash; anchoring virtual content to real-world surfaces.</li>
+            <li><strong>Drone / UAV landing</strong> &mdash; precision landing pads with a known ID.</li>
+            <li><strong>Industrial automation</strong> &mdash; conveyor part tracking, AGV navigation.</li>
+        </ul>
+        <p>
+            Each tag encodes a unique <strong>ID</strong> and carries enough redundancy
+            (the &ldquo;<em>h</em>&rdquo; in <code>tag36h11</code> stands for the minimum
+            <strong>Hamming distance</strong>) to be recognised reliably under bad lighting,
+            motion blur, and at long range. The detector returns the four image-corner
+            coordinates of the marker, which &mdash; given the printed tag size &mdash; gives
+            you a metric pose.
+        </p>
+    </section>
+
+    <section class="article">
+        <h2>How to use this AprilTag generator</h2>
+        <ol>
+            <li>Pick an <strong>AprilTag family</strong> (e.g. <code>tag36h11</code> for general use).</li>
+            <li>Choose the <strong>tag ID</strong> &mdash; any integer from 0 to the family's max.</li>
+            <li>Enter either the <strong>total size</strong> (paper edge in&nbsp;mm) or the
+                <strong>tag size</strong> (the value you give the detector). The two
+                fields are linked &mdash; type one and the other auto-converts.</li>
+            <li>Click <strong>Save&nbsp;SVG</strong> to download a single marker, or
+                <strong>+&nbsp;Add&nbsp;to&nbsp;sheet</strong> to start a multi-tag print sheet.</li>
+            <li>Hit <strong>Print&nbsp;/&nbsp;PDF</strong> to print the sheet on A4 paper.
+                Each tag is automatically wrapped in a dashed cut line so you know exactly
+                where to scissor.</li>
+        </ol>
+        <p>
+            Everything runs locally in your browser &mdash; no signup, no upload, no
+            tracking. The generator pulls the official tag SVGs from the
+            <a href="https://github.com/AprilRobotics/apriltag-imgs">AprilRobotics/apriltag-imgs</a>
+            repository.
+        </p>
+    </section>
+
+    <section class="article">
+        <h2>Tag size: what to enter into your detector</h2>
+        <p>
+            The single most common AprilTag bug is using the wrong tag size. The
+            <strong>tag size</strong> the detector expects is <em>not</em> the outer
+            paper edge. It is the side length of the inner solid black detection square
+            (the boundary between the black border and the white quiet zone).
+        </p>
+
+        <figure class="chart">
+            <img src="img/apriltag-tag-size-chart.png"
+                 alt="AprilTag families — Tag36h11, TagStandard41h12, TagStandard52h13, TagCircle21h7, TagCircle49h12, TagCustom48h12 — with red arrows showing the official tag size measurement (the side of the inner solid black detection square) and dashed outlines showing the full printed marker.">
+            <figcaption>
+                The six common AprilTag&nbsp;3 families. The <span style="color:#d04a4a">red&nbsp;arrow</span>
+                in each tag is the <strong>tag size</strong> &mdash; the value you give to the detector.
+                The dashed outline is the full printed paper (tag&nbsp;size + the white quiet zone).
+                Figure: Krogius, Olson <em>et&nbsp;al.</em>, IROS&nbsp;2019.
+            </figcaption>
+        </figure>
+
+        <p>
+            For each family the ratio between detection-square side and the full SVG
+            (the printed paper) is fixed:
+        </p>
+        <ul>
+            <li><code>tag16h5</code>: tag size = 6/8 &times; total size (= 0.75)</li>
+            <li><code>tag25h9</code>: tag size = 7/9 &times; total size (≈ 0.778)</li>
+            <li><code>tag36h11</code>: tag size = 8/10 &times; total size (= 0.80)</li>
+            <li><code>tagStandard41h12</code>: tag size = 5/9 &times; total size (≈ 0.556)</li>
+            <li><code>tagStandard52h13</code>: tag size = 6/10 &times; total size (= 0.60)</li>
+            <li><code>tagCustom48h12</code>: tag size = 6/10 &times; total size (= 0.60)</li>
+        </ul>
+        <p>
+            The two fields in the form above do this conversion for you automatically &mdash;
+            type either one and the other updates.
+        </p>
+    </section>
+
+    <section class="article">
+        <h2>Frequently asked questions</h2>
+
+        <h3>Which AprilTag family should I use?</h3>
+        <p>
+            For general robotics and AR use, <strong><code>tag36h11</code></strong> is the
+            usual recommendation: 587 IDs, very robust detection, well-supported by every
+            popular library (apriltag, AprilTag-ROS, OpenCV, ArUco bridges).
+            If you need <em>many</em> unique IDs (warehouses, asset tracking),
+            <code>tagStandard52h13</code> (48&nbsp;714 IDs) or <code>tagCustom48h12</code>
+            (42&nbsp;211 IDs) are good choices.
+        </p>
+
+        <h3>Can I print AprilTags as PDF?</h3>
+        <p>
+            Yes. Click <em>Print / PDF</em> and choose &ldquo;Save as PDF&rdquo; from your
+            browser&rsquo;s print dialog. The tool prints either the single live preview or,
+            if you've added tags to the sheet, a multi-page A4 PDF with dashed cut lines.
+        </p>
+
+        <h3>What size should I print my AprilTag?</h3>
+        <p>
+            That depends on your detection range. As a rule of thumb, an AprilTag needs
+            to occupy at least <strong>~6&nbsp;pixels per data cell</strong> in the camera
+            image to be reliably detected. For <code>tag36h11</code> at a 5&nbsp;m range
+            with a 1080p sensor, a 100&nbsp;mm tag size works well in practice.
+        </p>
+
+        <h3>Can I use these AprilTags with ROS / OpenCV?</h3>
+        <p>
+            Yes &mdash; the generated markers are bit-for-bit identical to the official
+            AprilTag images, so they work with
+            <a href="https://github.com/AprilRobotics/apriltag_ros">apriltag_ros</a>,
+            <a href="https://github.com/AprilRobotics/apriltag">apriltag (C library)</a>,
+            <a href="https://docs.opencv.org/">OpenCV</a>, ROS&nbsp;2 packages, and any other
+            standard AprilTag detector.
+        </p>
+
+        <h3>Is this AprilTag generator free?</h3>
+        <p>
+            Completely free, no signup, no ads, no tracking. The whole tool runs as static
+            HTML / JavaScript on GitHub Pages.
+        </p>
+    </section>
+
     <footer>
         <p>&copy; Chaithanya Krishna Bodduluri &middot;
-           <a href="index.html">Home</a></p>
+           <a href="index.html">Home</a> &middot;
+           <a href="https://github.com/chaitanyantr/chaitanyantr.github.io">Source on GitHub</a>
+        </p>
     </footer>
 
 </div>
 
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="main.js" defer></script>
 </body>
 </html>

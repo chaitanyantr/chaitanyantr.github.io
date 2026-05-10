@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>OG card template</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            background: #444;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
+
+        /* Exactly 1200x630 — the standard OG / Twitter card ratio */
+        .og {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #f6f9ff 0%, #dde8fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 70px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Big AprilTag visual on the right */
+        .og .tag {
+            width: 360px;
+            height: 360px;
+            background: #fff;
+            padding: 28px;
+            border-radius: 22px;
+            box-shadow: 0 18px 50px rgba(20, 50, 120, 0.18);
+            border: 1px solid #d8e0ee;
+            flex-shrink: 0;
+        }
+        .og .tag img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        /* Text block on the left */
+        .og .text {
+            max-width: 640px;
+        }
+
+        .og .eyebrow {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #1772d0;
+            margin-bottom: 18px;
+        }
+
+        .og h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: #0e1a36;
+            margin-bottom: 22px;
+        }
+
+        .og .sub {
+            font-size: 24px;
+            line-height: 1.45;
+            color: #455165;
+            margin-bottom: 36px;
+        }
+
+        .og .footer {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 18px;
+            color: #6a7280;
+        }
+
+        .og .footer .url {
+            color: #1772d0;
+            font-weight: 600;
+        }
+
+        .og .footer .pill {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #1772d0;
+            color: #fff;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        /* Decorative corner dots — looks like cut marks */
+        .og::before,
+        .og::after {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 2px dashed #1772d0;
+            opacity: 0.25;
+        }
+        .og::before { top: 30px; left: 30px;  border-right: none; border-bottom: none; }
+        .og::after  { bottom: 30px; right: 30px; border-left: none;  border-top: none;    }
+    </style>
+</head>
+<body>
+
+<div class="og">
+    <div class="text">
+        <div class="eyebrow">Free &middot; In your browser</div>
+        <h1>AprilTag<br>Generator</h1>
+        <p class="sub">
+            Print AprilTag fiducial markers — single tags or multi-tag A4 sheets with cut lines. SVG &amp; PDF.
+        </p>
+        <div class="footer">
+            <span class="pill">Open Source</span>
+            <span class="url">chaitanyantr.github.io/apriltag</span>
+        </div>
+    </div>
+
+    <div class="tag">
+        <img src="img/tag16h5-11.svg" alt="AprilTag">
+    </div>
+</div>
+
+</body>
+</html>

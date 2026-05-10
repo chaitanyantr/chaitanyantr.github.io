@@ -44,7 +44,7 @@ const mappings = {
 
 function getAprilTagSVGContent(family, tagId) {
 	// url ex : `https://raw.githubusercontent.com/chaitanyantr/apriltag/main/tag16h5/tag16_05_00000.svg`
-	
+
 	let id = tagId.toString();
 	while(id.length < 5){
 		id = "0" + id
@@ -56,8 +56,8 @@ function getAprilTagSVGContent(family, tagId) {
 		const res = await fetch(url);
 		const content = await res.text();
 		return content
-	} 
-	
+	}
+
 	return getSVGContentFromURL(url)
 }
 
@@ -68,17 +68,184 @@ function debounce(func, ms) {
 	  timeout = setTimeout(() => func.apply(this, arguments), ms);
 	};
   }
-  
+
 function init() {
 	var familySelect = document.querySelector('.setup select[name=dict]');
 	var markerIdInput = document.querySelector('.setup input[name=id]');
 	var sizeInput = document.querySelector('.setup input[name=size]');
 	var tagSizeInput = document.querySelector('.setup input[name=tag-size]');
 	var saveButton = document.querySelector('.save-button');
+	var addButton = document.querySelector('.add-button');
+	var clearButton = document.querySelector('.clear-sheet');
+	var sheetSection = document.querySelector('.sheet-section');
+	var pagesEl = document.querySelector('.print-pages');
+	var sheetCount = document.querySelector('.sheet-count');
+	var pageInfo = document.querySelector('.page-info');
+
+	// ---------- A4 packing constants (mm) ----------
+	var PAGE_W = 210;
+	var PAGE_H = 297;
+	var MARGIN = 10;                 // page margin
+	var USABLE_W = PAGE_W - 2 * MARGIN; // 190
+	var USABLE_H = PAGE_H - 2 * MARGIN; // 277
+	var CARD_PAD = 3;                // padding inside dashed border, around tag
+	var LABEL_H = 5;                 // label height (mm)
+	var GAP = 3;                     // gap between cards in mm
+
+	// Queue of {family, id, size, svg}
+	var queue = [];
+
+	function paginate(items) {
+		var pages = [];
+		var curPage = [];
+		var curPageH = 0;
+		var curRow = [];
+		var curRowW = 0;
+		var curRowH = 0;
+
+		function commitRow() {
+			if (curRow.length === 0) return;
+			var rowExtraH = curPage.length > 0 ? GAP : 0;
+			if (curPageH + rowExtraH + curRowH > USABLE_H) {
+				if (curPage.length > 0) pages.push(curPage);
+				curPage = [];
+				curPageH = 0;
+				rowExtraH = 0;
+			}
+			curPageH += rowExtraH + curRowH;
+			curPage.push(curRow);
+			curRow = [];
+			curRowW = 0;
+			curRowH = 0;
+		}
+
+		items.forEach(function(item) {
+			var w = item.size + 2 * CARD_PAD;
+			var h = item.size + 2 * CARD_PAD + LABEL_H;
+			var card = { item: item, w: w, h: h };
+			var extraW = curRow.length > 0 ? GAP : 0;
+			if (curRowW + extraW + w > USABLE_W) {
+				commitRow();
+				extraW = 0;
+			}
+			curRowW += extraW + w;
+			curRowH = Math.max(curRowH, h);
+			curRow.push(card);
+		});
+		commitRow();
+		if (curPage.length > 0) pages.push(curPage);
+		return pages;
+	}
+
+	function renderSheet() {
+		pagesEl.innerHTML = '';
+		var pages = paginate(queue);
+		var globalIdx = 0;
+
+		pages.forEach(function(page, pageIdx) {
+			var pageEl = document.createElement('div');
+			pageEl.className = 'print-page';
+
+			var content = document.createElement('div');
+			content.className = 'page-content';
+
+			page.forEach(function(row) {
+				var rowEl = document.createElement('div');
+				rowEl.className = 'page-row';
+
+				row.forEach(function(card) {
+					var idx = globalIdx;
+					globalIdx++;
+					var item = card.item;
+
+					var cardEl = document.createElement('div');
+					cardEl.className = 'print-marker';
+					cardEl.style.width = card.w + 'mm';
+
+					var tagBox = document.createElement('div');
+					tagBox.className = 'tag-box';
+					tagBox.style.width = item.size + 'mm';
+					tagBox.style.height = item.size + 'mm';
+					tagBox.innerHTML = item.svg;
+					var svg = tagBox.firstElementChild;
+					if (svg) {
+						svg.setAttribute('viewBox', mappings[item.family].viewBox);
+						svg.setAttribute('width', item.size + 'mm');
+						svg.setAttribute('height', item.size + 'mm');
+						svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+					}
+
+					var label = document.createElement('div');
+					label.className = 'print-marker-label';
+					label.textContent = item.family + '  ID:' + item.id + '  ' + item.size + 'mm';
+
+					var rm = document.createElement('button');
+					rm.type = 'button';
+					rm.className = 'remove-btn';
+					rm.title = 'Remove this tag';
+					rm.innerHTML = '&times;';
+					rm.addEventListener('click', function() {
+						queue.splice(idx, 1);
+						renderSheet();
+					});
+
+					cardEl.appendChild(tagBox);
+					cardEl.appendChild(label);
+					cardEl.appendChild(rm);
+					rowEl.appendChild(cardEl);
+				});
+
+				content.appendChild(rowEl);
+			});
+
+			var pageNum = document.createElement('div');
+			pageNum.className = 'page-number';
+			pageNum.textContent = 'Page ' + (pageIdx + 1) + ' / ' + pages.length;
+
+			pageEl.appendChild(content);
+			pageEl.appendChild(pageNum);
+			pagesEl.appendChild(pageEl);
+		});
+
+		sheetCount.textContent = queue.length;
+		pageInfo.textContent = pages.length === 0
+			? ''
+			: pages.length + ' page' + (pages.length > 1 ? 's' : '');
+		sheetSection.hidden = queue.length === 0;
+		document.body.classList.toggle('has-queue', queue.length > 0);
+	}
+
+	addButton.addEventListener('click', function() {
+		var familyName = familySelect.options[familySelect.selectedIndex].value;
+		var markerId = Number(markerIdInput.value);
+		var size = Number(sizeInput.value);
+		if (size + 2 * CARD_PAD > USABLE_W || size + 2 * CARD_PAD + LABEL_H > USABLE_H) {
+			alert('Tag is too large to fit on an A4 page. Max size ≈ ' +
+				(USABLE_W - 2 * CARD_PAD) + ' mm.');
+			return;
+		}
+		getAprilTagSVGContent(familyName, markerId).then(function(content){
+			queue.push({
+				family: familyName,
+				id: markerId,
+				size: size,
+				svg: content
+			});
+			renderSheet();
+			sheetSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+		});
+	});
+
+	clearButton.addEventListener('click', function() {
+		if (!queue.length) return;
+		if (queue.length > 1 && !confirm('Remove all ' + queue.length + ' tags from the sheet?')) return;
+		queue = [];
+		renderSheet();
+	});
 
 	function updateSize(){
 		var size = Number(sizeInput.value);
-		const svgElm = document.querySelector('.marker').firstElementChild;
+		const svgElm = document.querySelector('.preview-pane .marker').firstElementChild;
 		if (!!svgElm) {
 			svgElm.setAttribute('width', size + 'mm');
 			svgElm.setAttribute('height', size + 'mm');
@@ -94,7 +261,7 @@ function init() {
 		tagSizeInput.value = Math.round(this.value * mappings[familyName].tag_size_ratio * 10) / 10;
 		updateSize();
 	});
-	
+
 	tagSizeInput.addEventListener("change", function() {
 		var familyName = familySelect.options[familySelect.selectedIndex].value;
 		sizeInput.value = Math.round(this.value / mappings[familyName].tag_size_ratio * 10) / 10;
@@ -106,8 +273,8 @@ function init() {
 		var markerId = Number(markerIdInput.value);
 		var familyName = familySelect.options[familySelect.selectedIndex].value;
 		getAprilTagSVGContent(familyName, markerId).then(function(content){
-			document.querySelector('.marker').innerHTML = content;
-			const svgElm = document.querySelector('.marker').firstElementChild
+			document.querySelector('.preview-pane .marker').innerHTML = content;
+			const svgElm = document.querySelector('.preview-pane .marker').firstElementChild
 			svgElm.setAttribute('viewBox', mappings[familyName].viewBox);
 			updateSize()
 			saveButton.setAttribute('href', 'data:image/svg;base64,' + btoa(svgElm.outerHTML.replace('viewbox', 'viewBox')));

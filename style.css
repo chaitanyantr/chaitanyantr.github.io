@@ -201,7 +201,7 @@ ul.news .date {
     font-size: 15px;
 }
 
-/* AprilTag thumbnail – simple svg-like marker */
+/* AprilTag thumbnail – real SVG */
 .apriltag-thumb {
     display: flex;
     align-items: center;
@@ -210,25 +210,17 @@ ul.news .date {
     border: 1px solid #eee;
     border-radius: 6px;
     height: 130px;
+    padding: 14px;
+    box-sizing: border-box;
 }
-.tag-preview {
-    width: 96px;
-    height: 96px;
-    background:
-        linear-gradient(#000 0 0) 0   0   / 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 16px 0  / 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 64px 0  / 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 80px 0  / 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 0   16px/ 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 80px 16px/ 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 32px 32px/ 32px 16px no-repeat,
-        linear-gradient(#000 0 0) 32px 48px/ 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 0   80px/ 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 16px 80px/ 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 64px 80px/ 16px 16px no-repeat,
-        linear-gradient(#000 0 0) 80px 80px/ 16px 16px no-repeat,
-        #fff;
-    border: 8px solid #000;
+.apriltag-thumb a { display: block; height: 100%; }
+.apriltag-thumb img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
 }
 
 /* ---------- Publications ---------- */
