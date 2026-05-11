@@ -2,42 +2,50 @@ const mappings = {
     "tag16h5": {
         "file_prefix": "tag16_05_",
         "viewBox": "0 0 80 80",
-		"tag_size_ratio": 6/8
+		"tag_size_ratio": 6/8,
+		"max_id": 29
     },
     "tag25h9": {
         "file_prefix": "tag25_09_",
         "viewBox": "0 0 90 90",
-		"tag_size_ratio": 7/9
+		"tag_size_ratio": 7/9,
+		"max_id": 34
     },
     "tag36h11": {
         "file_prefix": "tag36_11_",
         "viewBox": "0 0 100 100",
 		"tag_size_ratio": 8/10,
+		"max_id": 586
     },
     "tagCircle21h7": {
         "file_prefix": "tag21_07_",
         "viewBox": "0 0 90 90",
-		"tag_size_ratio": 1.0
+		"tag_size_ratio": 1.0,
+		"max_id": 37
     },
     "tagCircle49h12": {
         "file_prefix": "tag49_12_",
         "viewBox": "0 0 110 110",
-		"tag_size_ratio": 1.0
+		"tag_size_ratio": 1.0,
+		"max_id": 65697
     },
     "tagCustom48h12": {
         "file_prefix": "tag48_12_",
         "viewBox": "0 0 100 100",
 		"tag_size_ratio": 6/10,
+		"max_id": 42210
     },
     "tagStandard41h12": {
         "file_prefix": "tag41_12_",
         "viewBox": "0 0 90 90",
 		"tag_size_ratio": 5/9,
+		"max_id": 2114
     },
     "tagStandard52h13": {
         "file_prefix": "tag52_13_",
         "viewBox": "0 0 100 100",
-		"tag_size_ratio": 6/10
+		"tag_size_ratio": 6/10,
+		"max_id": 48713
     }
 }
 
@@ -81,6 +89,24 @@ function init() {
 	var pagesEl = document.querySelector('.print-pages');
 	var sheetCount = document.querySelector('.sheet-count');
 	var pageInfo = document.querySelector('.page-info');
+	var idRangeEl = document.getElementById('id-range');
+
+	function currentFamily() {
+		return familySelect.options[familySelect.selectedIndex].value;
+	}
+
+	function applyIdConstraints() {
+		var fam = currentFamily();
+		var max = mappings[fam].max_id;
+		markerIdInput.setAttribute('min', '0');
+		markerIdInput.setAttribute('max', String(max));
+		if (idRangeEl) idRangeEl.textContent = '(0 \u2013 ' + max + ')';
+		// Clamp current value
+		var v = Number(markerIdInput.value);
+		if (isNaN(v) || v < 0) v = 0;
+		if (v > max) v = max;
+		if (String(v) !== markerIdInput.value) markerIdInput.value = v;
+	}
 
 	// ---------- A4 packing constants (mm) ----------
 	var PAGE_W = 210;
@@ -216,9 +242,14 @@ function init() {
 	}
 
 	addButton.addEventListener('click', function() {
-		var familyName = familySelect.options[familySelect.selectedIndex].value;
+		var familyName = currentFamily();
 		var markerId = Number(markerIdInput.value);
 		var size = Number(sizeInput.value);
+		var max = mappings[familyName].max_id;
+		if (isNaN(markerId) || markerId < 0 || markerId > max) {
+			alert('Tag ID is out of range. ' + familyName + ' supports IDs 0 \u2013 ' + max + '.');
+			return;
+		}
 		if (size + 2 * CARD_PAD > USABLE_W || size + 2 * CARD_PAD + LABEL_H > USABLE_H) {
 			alert('Tag is too large to fit on an A4 page. Max size ≈ ' +
 				(USABLE_W - 2 * CARD_PAD) + ' mm.');
@@ -253,7 +284,12 @@ function init() {
 	}
 
 	familySelect.addEventListener("change", function() {
+		applyIdConstraints();
 		sizeInput.dispatchEvent(new Event('change'));
+	});
+
+	markerIdInput.addEventListener('input', function() {
+		applyIdConstraints();
 	});
 
 	sizeInput.addEventListener("change", function() {
@@ -271,18 +307,38 @@ function init() {
 	var updateTag = debounce(function() {
 		var sizeid = Number(sizeInput.value);
 		var markerId = Number(markerIdInput.value);
-		var familyName = familySelect.options[familySelect.selectedIndex].value;
+		var familyName = currentFamily();
+		var max = mappings[familyName].max_id;
+		var preview = document.querySelector('.preview-pane .marker');
+		var label = document.querySelector('.marker-id');
+
+		if (isNaN(markerId) || markerId < 0 || markerId > max) {
+			preview.innerHTML = '<div class="tag-error">ID out of range. ' +
+				familyName + ' supports IDs 0 \u2013 ' + max + '.</div>';
+			label.innerHTML = '';
+			saveButton.removeAttribute('href');
+			saveButton.removeAttribute('download');
+			return;
+		}
+
 		getAprilTagSVGContent(familyName, markerId).then(function(content){
-			document.querySelector('.preview-pane .marker').innerHTML = content;
-			const svgElm = document.querySelector('.preview-pane .marker').firstElementChild
+			if (!content || content.indexOf('<svg') === -1) {
+				preview.innerHTML = '<div class="tag-error">Could not load tag.</div>';
+				return;
+			}
+			preview.innerHTML = content;
+			const svgElm = preview.firstElementChild;
 			svgElm.setAttribute('viewBox', mappings[familyName].viewBox);
-			updateSize()
+			updateSize();
 			saveButton.setAttribute('href', 'data:image/svg;base64,' + btoa(svgElm.outerHTML.replace('viewbox', 'viewBox')));
 			saveButton.setAttribute('download', familyName + '-' + markerId + '.svg');
-			document.querySelector('.marker-id').innerHTML = familyName + ', ID : ' +  + markerId + '  Size:' + sizeid + ' mm' ;
-		})
+			label.innerHTML = familyName + ', ID : ' + markerId + '  Size:' + sizeid + ' mm';
+		}).catch(function() {
+			preview.innerHTML = '<div class="tag-error">Could not load tag (network error).</div>';
+		});
 	}, 200)
 
+	applyIdConstraints();
 	sizeInput.dispatchEvent(new Event('change'));
 	updateTag();
 

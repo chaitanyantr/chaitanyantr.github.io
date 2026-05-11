@@ -109,6 +109,29 @@
     text-transform: none;
 }
 
+/* Small "(0 – 586)" hint next to Tag ID label */
+.setup label .id-range {
+    color: #1772d0;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: none;
+    margin-left: 4px;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Friendly error overlay inside the live preview marker */
+.tag-error {
+    color: #b53a3a;
+    font-size: 13px;
+    text-align: center;
+    padding: 30px 20px;
+    background: #fff3f3;
+    border: 1px dashed #d04a4a;
+    border-radius: 6px;
+    max-width: 280px;
+}
+
 .setup input,
 .setup select {
     font: inherit;
