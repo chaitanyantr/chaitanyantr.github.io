@@ -43,6 +43,14 @@ html, body {
     color: #222;
     font-size: 15px;
     letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.topnav .brand-logo {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
 }
 .topnav .brand:hover { text-decoration: none; color: #1772d0; }
 
@@ -96,10 +104,9 @@ em { font-style: italic; }
     width: 180px;
     height: 180px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 50%;
     flex-shrink: 0;
     background: #f3f3f3;
-    padding: 12px;
     border: 1px solid #eee;
 }
 
